@@ -25,7 +25,7 @@ const MODEL_MAPPING = {
   'deepseek-ai/deepseek-v4-flash-0731': 'meta/muse-glimmer-30b',
   'z-ai/glm-5.2': 'nvidia/nemotron-3-ultra-550b-a55b',
   'google/gemma-4-31b-it': 'nvidia/nemotron-3-super-120b-a12b',
-  'openai/gpt-oss-120b': 'meta/llama-3.2-11b-vision-instruct'
+  'openai/gpt-oss-120b': 'moonshotai/kimi-k3'
 };
 
 // Health check endpoint
