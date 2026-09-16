@@ -79,7 +79,7 @@ app.post('/v1/chat/completions', async (req, res) => {
         if (modelLower.includes('gpt-4') || modelLower.includes('claude-opus') || modelLower.includes('405b')) {
           nimModel = 'meta/llama-3.3-70b-instruct';
         } else if (modelLower.includes('claude') || modelLower.includes('gemini') || modelLower.includes('70b')) {
-          nimModel = 'meta/llama-3.1-70b-instruct';
+          nimModel = 'meta/llama-3.3-70b-instruct';
         } else {
           nimModel = 'meta/llama-3.3-70b-instruct';
         }
