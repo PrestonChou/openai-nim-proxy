@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   next();
 });
 
-  app.get('/', (req, res) => {
+app.all('/', (req, res) => {
   res.status(200).json({ status: 'proxy is running' });
 });
   
