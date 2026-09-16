@@ -22,8 +22,9 @@ const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwarg
 
 // Model mapping (adjust based on available NIM models)
 const MODEL_MAPPING = {
-  'deepseek-ai/deepseek-v4-flash-0731': 'deepseek-ai/deepseek-v4-flash',
-  'moonshotai/kimi-k3': 'deepseek-ai/deepseek-v4-flash'
+  'deepseek-ai/deepseek-v4-flash-0731': 'openai/gpt-oss-120b',
+  'moonshotai/kimi-k3': 'nvidia/nemotron-3-ultra-550b-a55b',
+  'google/gemma-4-31b-it': 'deepseek-ai/deepseek-v4-pro-0813'
 };
 
 // Health check endpoint
@@ -77,11 +78,11 @@ app.post('/v1/chat/completions', async (req, res) => {
       if (!nimModel) {
         const modelLower = model.toLowerCase();
         if (modelLower.includes('gpt-4') || modelLower.includes('claude-opus') || modelLower.includes('405b')) {
-          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
+          nimModel = 'meta/llama-3.1-405b-instruct';
         } else if (modelLower.includes('claude') || modelLower.includes('gemini') || modelLower.includes('70b')) {
-          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
+          nimModel = 'meta/llama-3.1-70b-instruct';
         } else {
-          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
+          nimModel = 'meta/llama-3.1-8b-instruct';
         }
       }
     }
