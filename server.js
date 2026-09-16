@@ -24,7 +24,7 @@ const ENABLE_THINKING_MODE = false; // Set to true to enable chat_template_kwarg
 const MODEL_MAPPING = {
   'deepseek-ai/deepseek-v4-flash-0731': 'openai/gpt-oss-120b',
   'moonshotai/kimi-k3': 'nvidia/nemotron-3-ultra-550b-a55b',
-  'google/gemma-4-31b-it': 'deepseek-ai/deepseek-v4-pro-0813'
+  'google/gemma-4-31b-it': 'z-ai/glm-5-3'
 };
 
 // Health check endpoint
