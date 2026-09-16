@@ -77,11 +77,11 @@ app.post('/v1/chat/completions', async (req, res) => {
       if (!nimModel) {
         const modelLower = model.toLowerCase();
         if (modelLower.includes('gpt-4') || modelLower.includes('claude-opus') || modelLower.includes('405b')) {
-          nimModel = 'meta/llama-3.3-70b-instruct';
+          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
         } else if (modelLower.includes('claude') || modelLower.includes('gemini') || modelLower.includes('70b')) {
-          nimModel = 'meta/llama-3.3-70b-instruct';
+          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
         } else {
-          nimModel = 'meta/llama-3.3-70b-instruct';
+          nimModel = 'deepseek-ai/deepseek-v4-flash-0731';
         }
       }
     }
