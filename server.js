@@ -78,11 +78,22 @@ async function callNim(nimModel, payload, stream) {
       validateStatus: (status) => status < 500 || isRetiredStatus(status)
     });
     console.log(`[nim] got response from ${nimModel}: ${response.status}`);
-        if (response.status >= 400) {
-      console.error(`[nim] error body:`, JSON.stringify(response.data));
-    }
-        if (response.status >= 400 && !isRetiredStatus(response.status)) {
-      const err = new Error(response.data?.error?.message || `NIM returned ${response.status}`);
+
+    if (response.status >= 400 && !isRetiredStatus(response.status)) {
+      let errorBody = response.data;
+      if (stream) {
+        // response.data is a readable stream here, not a JSON object —
+        // read it into a string first so we can actually see what NVIDIA said.
+        try {
+          const chunks = [];
+          for await (const chunk of response.data) chunks.push(chunk);
+          errorBody = JSON.parse(Buffer.concat(chunks).toString('utf8'));
+        } catch (parseErr) {
+          errorBody = { error: { message: 'could not parse streamed error body' } };
+        }
+      }
+      console.error(`[nim] error body:`, JSON.stringify(errorBody));
+      const err = new Error(errorBody?.error?.message || `NIM returned ${response.status}`);
       err.status = response.status;
       throw err;
     }
