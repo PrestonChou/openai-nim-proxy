@@ -38,7 +38,8 @@ const ENABLE_THINKING_MODE = false;
 const MODEL_MAPPING = {
   'deepseek-v4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
   'kimi-k3':            'moonshotai/kimi-k3',
-  'gemma-4':            'google/gemma-4-31b-it'
+  'gemma-4':            'google/gemma-4-31b-it',
+  'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b'
 };
 
 // Ordered fallback chain to try, in order, if the requested/mapped model
@@ -183,7 +184,7 @@ app.post('/v1/chat/completions', async (req, res) => {
 
     const payload = {
       messages,
-      temperature: temperature || 0.6,
+      temperature: Math.min(Math.max(temperature ?? 0.6, 0), 1),
       max_tokens: max_tokens || 9024,
       extra_body: ENABLE_THINKING_MODE ? { chat_template_kwargs: { thinking: true } } : undefined,
       stream: stream || false
