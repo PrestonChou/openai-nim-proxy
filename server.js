@@ -64,6 +64,7 @@ function isRetiredStatus(status) {
 // to the client as-is.
 async function callNim(nimModel, payload, stream) {
   try {
+    console.log(`[nim] calling ${nimModel}...`);
     const response = await axios.post(`${NIM_API_BASE}/chat/completions`, {
       ...payload,
       model: nimModel
@@ -73,8 +74,10 @@ async function callNim(nimModel, payload, stream) {
         'Content-Type': 'application/json'
       },
       responseType: stream ? 'stream' : 'json',
+      timeout: 30000,
       validateStatus: (status) => status < 500 || isRetiredStatus(status)
     });
+    console.log(`[nim] got response from ${nimModel}: ${response.status}`);
 
     if (isRetiredStatus(response.status)) {
       deadModels.add(nimModel);
@@ -86,6 +89,9 @@ async function callNim(nimModel, payload, stream) {
     return response;
   } catch (error) {
     if (error.modelRetired) throw error;
+    if (error.code === 'ECONNABORTED') {
+      console.error(`[nim] TIMEOUT calling ${nimModel} after 30s`);
+    }
     // Network-level or axios-thrown HTTP error (e.g. status >= 500)
     if (error.response && isRetiredStatus(error.response.status)) {
       deadModels.add(nimModel);
