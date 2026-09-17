@@ -14,6 +14,10 @@ app.use((req, res, next) => {
   next();
 });
 
+process.on('unhandledRejection', (err) => {
+  console.error('[unhandled rejection]', err);
+});
+
 app.all('/', (req, res) => {
   res.status(200).json({ status: 'proxy is running' });
 });
