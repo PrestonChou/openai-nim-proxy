@@ -78,6 +78,14 @@ async function callNim(nimModel, payload, stream) {
       validateStatus: (status) => status < 500 || isRetiredStatus(status)
     });
     console.log(`[nim] got response from ${nimModel}: ${response.status}`);
+        if (response.status >= 400) {
+      console.error(`[nim] error body:`, JSON.stringify(response.data));
+    }
+        if (response.status >= 400 && !isRetiredStatus(response.status)) {
+      const err = new Error(response.data?.error?.message || `NIM returned ${response.status}`);
+      err.status = response.status;
+      throw err;
+    }
 
     if (isRetiredStatus(response.status)) {
       deadModels.add(nimModel);
