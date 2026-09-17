@@ -55,6 +55,18 @@ const FALLBACK_CHAIN = [
 // re-try a known-410 model on every single request.
 const deadModels = new Set();
 
+// Some models enforce a narrower temperature range than the usual 0–2.
+// Add an entry here (keyed by the real NIM model id) for any model that
+// rejects out-of-range values; everything else falls back to [0, 2].
+const TEMPERATURE_LIMITS = {
+  'moonshotai/kimi-k3': [0, 1]
+};
+
+function clampTemperature(nimModel, temperature) {
+  const [min, max] = TEMPERATURE_LIMITS[nimModel] || [0, 2];
+  return Math.min(Math.max(temperature ?? 0.6, min), max);
+}
+
 function isRetiredStatus(status) {
   return status === 404 || status === 410;
 }
@@ -66,8 +78,12 @@ function isRetiredStatus(status) {
 async function callNim(nimModel, payload, stream) {
   try {
     console.log(`[nim] calling ${nimModel}...`);
-    const response = await axios.post(`${NIM_API_BASE}/chat/completions`, {
+    const clampedPayload = {
       ...payload,
+      temperature: clampTemperature(nimModel, payload.temperature)
+    };
+    const response = await axios.post(`${NIM_API_BASE}/chat/completions`, {
+      ...clampedPayload,
       model: nimModel
     }, {
       headers: {
@@ -184,7 +200,7 @@ app.post('/v1/chat/completions', async (req, res) => {
 
     const payload = {
       messages,
-      temperature: Math.min(Math.max(temperature ?? 0.6, 0), 1),
+      temperature: temperature ?? 0.6,
       max_tokens: max_tokens || 9024,
       extra_body: ENABLE_THINKING_MODE ? { chat_template_kwargs: { thinking: true } } : undefined,
       stream: stream || false
@@ -292,6 +308,10 @@ app.all('*', (req, res) => {
   });
 });
 
+app.listen(PORT, () => {
+  console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
+});
 app.listen(PORT, () => {
   console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
