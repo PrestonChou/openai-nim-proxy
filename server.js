@@ -74,7 +74,7 @@ async function callNim(nimModel, payload, stream) {
         'Content-Type': 'application/json'
       },
       responseType: stream ? 'stream' : 'json',
-      timeout: 30000,
+      timeout: 0, // no timeout — let the model take as long as it needs
       validateStatus: (status) => status < 500 || isRetiredStatus(status)
     });
     console.log(`[nim] got response from ${nimModel}: ${response.status}`);
