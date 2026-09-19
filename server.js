@@ -36,7 +36,7 @@ const ENABLE_THINKING_MODE = false;
 // put the real, current build.nvidia.com/models slug on the right.
 // ─────────────────────────────────────────────────────────────
 const MODEL_MAPPING = {
-  'glm-5-3':            'z-ai/glm-5-3',
+  'glm-5-3':            'z-ai/glm-5.3',
   'kimi-k3':            'moonshotai/kimi-k3',
   'gemma-4':            'google/gemma-4-31b-it',
   'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b'
@@ -47,7 +47,7 @@ const MODEL_MAPPING = {
 // models you've confirmed are currently live on the free tier.
 const FALLBACK_CHAIN = [
   'nvidia/nemotron-3-ultra-550b-a55b',
-  'z-ai/glm-5-3',
+  'z-ai/glm-5.3',
   'nvidia/nemotron-3.5-lightning-30b-a3b'
 ];
 
@@ -308,6 +308,10 @@ app.all('*', (req, res) => {
   });
 });
 
+app.listen(PORT, () => {
+  console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
+  console.log(`Health check: http://localhost:${PORT}/health`);
+});
 app.listen(PORT, () => {
   console.log(`OpenAI to NVIDIA NIM Proxy running on port ${PORT}`);
   console.log(`Health check: http://localhost:${PORT}/health`);
