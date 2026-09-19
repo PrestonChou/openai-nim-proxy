@@ -36,7 +36,7 @@ const ENABLE_THINKING_MODE = false;
 // put the real, current build.nvidia.com/models slug on the right.
 // ─────────────────────────────────────────────────────────────
 const MODEL_MAPPING = {
-  'deepseek-v4-flash': 'deepseek-ai/deepseek-v4-flash-0731',
+  'glm-5-3':            'z-ai/glm-5-3',
   'kimi-k3':            'moonshotai/kimi-k3',
   'gemma-4':            'google/gemma-4-31b-it',
   'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b'
