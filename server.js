@@ -40,7 +40,8 @@ const MODEL_MAPPING = {
   'glm-5-3-flash':      'z-ai/glm-5.3-flash',
   'kimi-k3':            'moonshotai/kimi-k3',
   'gemma-4':            'google/gemma-4-31b-it',
-  'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b'
+  'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b',
+  'deepseek-v4.1-flash': 'deepseek-ai/deepseek-v4.1-flash'
 };
 
 // Ordered fallback chain to try, in order, if the requested/mapped model
