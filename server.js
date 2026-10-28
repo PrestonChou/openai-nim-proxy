@@ -36,12 +36,15 @@ const ENABLE_THINKING_MODE = false;
 // put the real, current build.nvidia.com/models slug on the right.
 // ─────────────────────────────────────────────────────────────
 const MODEL_MAPPING = {
-  'glm-5-3':            'z-ai/glm-5.3',
-  'glm-5-3-flash':      'z-ai/glm-5.3-flash',
-  'kimi-k3':            'moonshotai/kimi-k3',
-  'gemma-4':            'google/gemma-4-31b-it',
-  'nemotron-3-ultra':   'nvidia/nemotron-3-ultra-550b-a55b',
-  'deepseek-v4.1-flash': 'deepseek-ai/deepseek-v4.1-flash'
+  'glm-5-3-flash':          'z-ai/glm-5.3-flash',
+  'gemma-4':                'google/gemma-4-31b-it',
+  'nemotron-3-ultra':       'nvidia/nemotron-3-ultra-550b-a55b',
+  'deepseek-v4.1-flash':    'deepseek-ai/deepseek-v4.1-flash',
+  'minimax-m3.1-flash':     'minimaxai/minimax-m3.1-flash',
+  'step-5-preview':         'stepfun-ai/step-5-preview',
+  'nemotron-3.5-super-vl':  'nvidia/nemotron-3.5-super-vl-120b-a12b',
+  'nemotron-3.5-bolt':      'nvidia/nemotron-3.5-bolt-e4b',
+  'muse-glimmer':           'meta/muse-glimmer-30b'
 };
 
 // Ordered fallback chain to try, in order, if the requested/mapped model
@@ -49,7 +52,7 @@ const MODEL_MAPPING = {
 // models you've confirmed are currently live on the free tier.
 const FALLBACK_CHAIN = [
   'nvidia/nemotron-3-ultra-550b-a55b',
-  'z-ai/glm-5.3',
+  'minimaxai/minimax-m3.1-flash',
   'nvidia/nemotron-3.5-lightning-30b-a3b'
 ];
 
@@ -61,7 +64,7 @@ const deadModels = new Set();
 // Add an entry here (keyed by the real NIM model id) for any model that
 // rejects out-of-range values; everything else falls back to [0, 2].
 const TEMPERATURE_LIMITS = {
-  'moonshotai/kimi-k3': [0, 1]
+  // (none currently) example: 'publisher/model-id': [0, 1]
 };
 
 function clampTemperature(nimModel, temperature) {
