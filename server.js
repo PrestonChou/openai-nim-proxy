@@ -44,7 +44,8 @@ const MODEL_MAPPING = {
   'step-5-preview':         'stepfun-ai/step-5-preview',
   'nemotron-3.5-super-vl':  'nvidia/nemotron-3.5-super-vl-120b-a12b',
   'nemotron-3.5-bolt':      'nvidia/nemotron-3.5-bolt-e4b',
-  'muse-glimmer':           'meta/muse-glimmer-30b'
+  'muse-glimmer':           'meta/muse-glimmer-30b',
+  'mistral-large-4':        'mistralai/mistral-large-4-1t-a52b'
 };
 
 // Ordered fallback chain to try, in order, if the requested/mapped model
